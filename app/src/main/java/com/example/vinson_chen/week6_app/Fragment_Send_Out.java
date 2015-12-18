@@ -1,5 +1,6 @@
 package com.example.vinson_chen.week6_app;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -20,6 +22,7 @@ public class Fragment_Send_Out extends Fragment implements View.OnClickListener 
 
 
     Button button_send_out_calendar,button_send_out_email,button_send_out_call,button_send_out_web,button_send_out_map;
+    static final int PICK_CONTACT_REQUEST = 7986;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,13 +62,12 @@ public class Fragment_Send_Out extends Fragment implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         if(v.getId() == button_send_out_calendar.getId()){
-//            Intent calendarIntent = new Intent(Intent.ACTION_INSERT, CalendarContract.Events.CONTENT_URI);
-//            Calendar beginTime = Calendar.getInstance().set(2012, 0, 19, 7, 30);
-//            Calendar endTime = Calendar.getInstance().set(2012, 0, 19, 10, 30);
-//            calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis());
-//            calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getTimeInMillis());
-//            calendarIntent.putExtra(CalendarContract.Events.TITLE, "Ninja class");
-//            calendarIntent.putExtra(CalendarContract.Events.EVENT_LOCATION, "Secret dojo");
+            Intent calendarIntent = new Intent(Intent.ACTION_INSERT, CalendarContract.Events.CONTENT_URI);
+            calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, System.currentTimeMillis());
+            calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, System.currentTimeMillis()+60*60*1000);
+            calendarIntent.putExtra(CalendarContract.Events.TITLE, "Ninja class");
+            calendarIntent.putExtra(CalendarContract.Events.EVENT_LOCATION, "Secret dojo");
+            startActivityForResult(calendarIntent, PICK_CONTACT_REQUEST);
         }else if(v.getId() == button_send_out_email.getId()){
             Intent emailIntent = new Intent(Intent.ACTION_SEND);
             emailIntent.setType("message/rfc822");
@@ -78,7 +80,7 @@ public class Fragment_Send_Out extends Fragment implements View.OnClickListener 
             Log.d("Vinson","Web");
             Uri webpage = Uri.parse("http://www.android.com");
             Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
-            startActivity(webIntent);
+            startActivityForResult(webIntent, PICK_CONTACT_REQUEST);
         }else if(v.getId() == button_send_out_map.getId()){
             Uri location = Uri.parse("geo:0,0?q=1600+Amphitheatre+Parkway,+Mountain+View,+California");
             Intent mapIntent = new Intent(Intent.ACTION_VIEW, location);
@@ -89,5 +91,26 @@ public class Fragment_Send_Out extends Fragment implements View.OnClickListener 
             startActivity(callIntent);
         }
 
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        Log.d("Vinson","Got resultCode");
+        // Check which request we're responding to
+        if (requestCode == PICK_CONTACT_REQUEST) {
+            Log.d("Vinson","Got resultCode"+resultCode);
+            // Make sure the request was successful
+            if (resultCode == Activity.RESULT_OK) {
+
+                Toast.makeText(getActivity(),"Got resultCode",Toast.LENGTH_LONG);
+                Log.d("Vinson","Got resultCode");
+                // The user picked a contact.
+                // The Intent's data Uri identifies which contact was selected.
+
+                // Do something with the contact here (bigger example below)
+            }
+        }
     }
 }
