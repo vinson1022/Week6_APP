@@ -20,8 +20,8 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button2"
+        android:text="Button_Send"
+        android:id="@+id/button_send"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/button_send_out" />
 
@@ -30,8 +30,8 @@
         android:layout_height="wrap_content"
         android:text="New Button"
         android:id="@+id/button3"
-        android:layout_alignBottom="@+id/button2"
-        android:layout_toEndOf="@+id/button2" />
+        android:layout_alignBottom="@+id/button_send"
+        android:layout_toEndOf="@+id/button_send" />
 
     <FrameLayout
         android:layout_width="match_parent"

@@ -1,6 +1,8 @@
 package com.example.vinson_chen.week6_app;
 
 import android.app.Fragment;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,7 +12,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button button_send_out;
+    Button button_send_out,button_send;
 
     private View.OnClickListener Button_Listener = new View.OnClickListener()
     {
@@ -18,6 +20,9 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             if(v.getId() == button_send_out.getId()){
                 Fragment_Send_Out fragment1 = new Fragment_Send_Out();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_content, fragment1).commit();
+            }else if(v.getId() == button_send.getId()){
+                Fragment_Send fragment1 = new Fragment_Send();
                 getFragmentManager().beginTransaction().replace(R.id.fragment_content, fragment1).commit();
             }
         }
@@ -28,6 +33,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Intent intent = getIntent();
+        Uri data = intent.getData();
+
+        if(intent != null) {
+//            if (intent.getType().indexOf("image/") != -1) {
+//                Fragment_Send fragment1 = new Fragment_Send();
+//                getFragmentManager().beginTransaction().replace(R.id.fragment_content, fragment1).commit();
+//            } else {
+                Fragment_Send fragment1 = new Fragment_Send();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_content, fragment1).commit();
+//            }
+        }else{
+            Fragment_Send_Out fragment1 = new Fragment_Send_Out();
+            getFragmentManager().beginTransaction().replace(R.id.fragment_content, fragment1).commit();
+        }
+
         setView();
         setListener();
 
@@ -35,16 +56,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void setView(){
 
-        Fragment_Send_Out fragment1 = new Fragment_Send_Out();
-        getFragmentManager().beginTransaction().replace(R.id.fragment_content, fragment1).commit();
-
         button_send_out = (Button)findViewById(R.id.button_send_out);
+        button_send = (Button)findViewById(R.id.button_send);
 
     }
 
     public void setListener(){
 
         button_send_out.setOnClickListener(Button_Listener);
+        button_send.setOnClickListener(Button_Listener);
 
     }
 }
