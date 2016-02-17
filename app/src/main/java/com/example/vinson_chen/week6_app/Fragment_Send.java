@@ -39,7 +39,6 @@ public class Fragment_Send extends Fragment{
 
         Intent intent = getActivity().getIntent();
         Uri uri = (Uri)intent.getParcelableExtra(Intent.EXTRA_STREAM);
-
         img = (ImageView)getActivity().findViewById(R.id.imageView);
         img.setImageURI(uri);
 

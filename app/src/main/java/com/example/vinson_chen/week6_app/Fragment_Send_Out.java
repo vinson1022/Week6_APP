@@ -66,15 +66,9 @@ public class Fragment_Send_Out extends Fragment implements View.OnClickListener 
     public void onClick(View v) {
         if(v.getId() == button_send_out_calendar.getId()){
             Intent calendarIntent = new Intent(Intent.ACTION_INSERT, CalendarContract.Events.CONTENT_URI);
-//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-//            Date dt;
-//            try {
-//                dt =sdf.parse("2013/01/07 11:49:00");
-//            } catch (ParseException e) {
-//                e.printStackTrace();
-//                dt = new Date();
-//            }
-//            Calendar b_time = Calendar.getInstance().setTime(dt);
+
+//            Calendar begin_time = Calendar.getInstance().set(2015,12,21,12,0);
+
             calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, System.currentTimeMillis());
             calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, System.currentTimeMillis()+60*60*1000);
             calendarIntent.putExtra(CalendarContract.Events.TITLE, "Ninja class");
